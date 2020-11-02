@@ -80,7 +80,7 @@ export default class Home extends Vue {
 
   updateRate = 5000;
 
-  interval!: number;
+  interval: number | null = null;
 
   async beforeMount() {
     await this.fetchPairs();
@@ -93,6 +93,10 @@ export default class Home extends Vue {
   }
 
   createIntervalUpdate() {
+    if (this.interval) {
+      clearInterval(this.interval);
+    }
+
     this.interval = setInterval(async () => {
       await this.fetchPairs();
     }, this.updateRate);
